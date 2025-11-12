@@ -75,6 +75,7 @@ with col2:
 st.write("---")
 if st.button("🔍 Predict Water Quality"):
     features = pd.DataFrame([[pH, bod, cod, tds]], columns=["pH", "BOD", "COD", "TDS"])
+    features_scaled = scaler.transform(features)
     prediction = model.predict(features)[0]
 
     if prediction == "Safe":
@@ -96,4 +97,5 @@ with col4:
 
 st.write("---")
 st.markdown("<p style='text-align:center; color:gray;'>© Developed by Vinit | B.Tech (CSE), MIET</p>", unsafe_allow_html=True)
+
 
