@@ -39,11 +39,17 @@ df = pd.DataFrame(data, columns=["pH", "BOD", "COD", "TDS", "Quality"])
 X = df[["pH", "BOD", "COD", "TDS"]]
 y = df["Quality"]
 
+from sklearn.preprocessing import StandardScaler
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+model = RandomForestClassifier(n_estimators=200, random_state=42)
+model.fit(X_train_scaled, y_train)
+y_pred = model.predict(X_test_scaled)
 acc = accuracy_score(y_test, y_pred)
 
 # Save model
@@ -90,3 +96,4 @@ with col4:
 
 st.write("---")
 st.markdown("<p style='text-align:center; color:gray;'>© Developed by Vinit | B.Tech (CSE), MIET</p>", unsafe_allow_html=True)
+
